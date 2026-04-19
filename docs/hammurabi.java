@@ -18,10 +18,17 @@ public class Hammurabi {
         int landPrice = 19;
 
         for (int year = 1; year <= 10; year++) {
-            System.out.println("Year " + year);
-            printSummary (year, population, 0, 5, bushels, acres, landPrice, 3000, 3, 200);
+            printSummary(year, population, 0, 0, bushels, acres, landPrice, 0, 0, 0);
+            int acresToBuy = askHowManyAcresToBuy(landPrice, bushels);
+            int acresToSell = 0;
+            if (acresToBuy == 0) {
+                acresToSell = askHowManyAcresToSell(acres);
+            }
+            int grainToFeed = askHowMuchGrainToFeedPeople(bushels);
+            int acresToPlant = askHowManyAcresToPlant(acres, population, bushels);
         }
-    }
+    }10
+    
 
     void printSummary(int year, int population, int starvation, int immigrants, int bushels, int acres, int landPrice, int harvest, int yield, int rats) {
         System.out.println("O Great Hammurabi!");
@@ -38,7 +45,7 @@ public class Hammurabi {
 
     int getNumber(String message) {
         while (true) {
-            System.out.println("message");
+            System.out.println(message);
             try {
                 return scanner.nextInt();
             } catch (Exception e) {
