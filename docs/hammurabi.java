@@ -87,5 +87,45 @@ public class Hammurabi {
             acres = getNumber("O Great Hammurabi, how many acres do you wish to plant? ");
     }
     return acres;
-}
+    }
+
+    int plagueDeaths(int population) {
+        if (random.nextInt(100) < 15) {
+            return population / 2;
+        }
+        return 0;
+    }
+
+    int starvationDeaths (int population, int bushelsFedToPeople){
+        int peopleFed = bushelsFedToPeople / 20;
+        if (peopleFed >= population){
+            return 0;
+        }
+        return population - peopleFed;
+    }
+
+    boolean uprising(int population, int howManyStarved){
+        return howManyStarved > population * 0.45;
+    }
+
+    int immigrants(int population, int acresOwned, int grainInStorage) {
+        return (20 * acresOwned + grainInStorage) / (100 * population) + 1;
+    }
+
+    int harvest(int acresPlanted){
+        int yield = random.nextInt(6) + 1;
+        return acresPlanted * yield;
+    }
+
+    int grainEatenByRats(int bushels) {
+        if (random.nextInt(100) < 40){
+            int percent = random.nextInt(21) + 10;
+            return bushels * percent / 100;
+        }
+        return 0;
+    }
+
+    int newCostOfLand(){
+        return random.nextInt(7) + 17;
+    }
 }
