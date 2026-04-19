@@ -11,24 +11,64 @@ public class Hammurabi {
     }
 
     void playGame() {
-        // game starting values
+        // starting values
         int population = 100;
         int bushels = 2800;
         int acres = 1000;
         int landPrice = 19;
+        int starved = 0;
+        int newImmigrants = 0;
+        int harvested = 0;
+        int acresToPlant = 0;
+        int rats = 0;   
 
         for (int year = 1; year <= 10; year++) {
-            printSummary(year, population, 0, 0, bushels, acres, landPrice, 0, 0, 0);
-            int acresToBuy = askHowManyAcresToBuy(landPrice, bushels);
-            int acresToSell = 0;
-            if (acresToBuy == 0) {
-                acresToSell = askHowManyAcresToSell(acres);
-            }
-            int grainToFeed = askHowMuchGrainToFeedPeople(bushels);
-            int acresToPlant = askHowManyAcresToPlant(acres, population, bushels);
-        }
-    }10
+            printSummary(year, population, starved, newImmigrants, bushels, acres, landPrice, harvested, 0, rats);
+
+        int acresToBuy = askHowManyAcresToBuy(landPrice, bushels);
+        bushels -= acresToBuy * landPrice;
+        acres += acresToBuy;
     
+        int acresToSell = 0;
+        
+        if (acresToBuy == 0) {
+                acresToSell = askHowManyAcresToSell(acres);
+                bushels += acresToSell * landPrice;
+                acres -= acresToSell;
+        }
+    
+        int grainToFeed = askHowMuchGrainToFeedPeople(bushels);
+            bushels -= grainToFeed;
+    
+        acresToPlant = askHowManyAcresToPlant(acres, population, bushels);
+            bushels -= acresToPlant * 2;
+
+        int deaths = plagueDeaths(population);
+        population -= deaths;
+
+        starved = starvationDeaths(population, grainToFeed);
+        population -= starved;
+
+        if (uprising(population, starved)) {
+            System.out.println("O Great Hammurabi, you have starved too many people! You are overthrown!");
+            return;
+        }
+
+        newImmigrants = 0;
+        if (starved == 0) {
+            newImmigrants = immigrants(population, acres, bushels);
+            population += newImmigrants;
+        }
+
+        harvested = harvest(acresToPlant);
+        bushels += harvested;
+
+        rats = grainEatenByRats(bushels);
+        bushels -= rats;
+
+        landPrice = newCostOfLand();
+        }
+    }
 
     void printSummary(int year, int population, int starvation, int immigrants, int bushels, int acres, int landPrice, int harvest, int yield, int rats) {
         System.out.println("O Great Hammurabi!");
