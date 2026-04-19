@@ -35,4 +35,57 @@ public class Hammurabi {
         System.out.println("Land is currently worth [" + landPrice + "] bushels per acre.");
 
     }
+
+    int getNumber(String message) {
+        while (true) {
+            System.out.println("message");
+            try {
+                return scanner.nextInt();
+            } catch (Exception e) {
+                System.out.println("\"" + scanner.next() + "\" isn't a number!");
+            }
+        }
+    }
+
+    int askHowManyAcresToBuy(int price, int bushels) {
+        int acres = getNumber("O Great Hammurabi, how many acres do you wish to buy?");
+        while (acres * price > bushels) {
+            System.out.println("O Great Hammurabi, surely you jest! You only have " + bushels + " bushels!");
+            acres = getNumber("O Great Hammurabi, how many acres do you wish to buy?");
+        }
+        return acres;
+    }
+
+    int askHowManyAcresToSell(int acresOwned) {
+        int acres = getNumber("O Great Hammurabi, how many acres do you wish to sell? ");
+        while (acres > acresOwned) {
+            System.out.println("O Great Hammurabi, surely you jest! You only own " + acresOwned + " acres!");
+            acres = getNumber("O Great Hammurabi, how many acres do you wish to sell? ");
+        }
+        return acres;
+    }
+
+    int askHowMuchGrainToFeedPeople(int bushels){
+        int grain = getNumber("O Great Hammurabi, how many bushels do you wish to feed your people? ");
+        while (grain > bushels) {
+            System.out.println("O Great Hammurabi, surely you jest! You only have " + bushels + " bushels!");
+            grain = getNumber("O Great Hammurabi, how many bushels do you wish to feed your people? ");
+        }
+        return grain;
+    }
+
+    int askHowManyAcresToPlant(int acresOwned, int population, int bushels) {
+        int acres = getNumber("O Great Hammurabi, how many acres do you wish to plant? ");
+        while (acres > acresOwned || acres * 2 > bushels || acres > population * 10) {
+            if (acres > acresOwned) {
+                System.out.println("O Great Hammurabi, surely you jest! You only own " + acresOwned + " acres!");
+            } else if (acres * 2 > bushels) {
+                System.out.println("O Great Hammurabi, surely you jest! You only have " + bushels + " bushels of grain!");
+            } else if (acres > population * 10) {
+            System.out.println("O Great Hammurabi, surely you jest! You only have " + population + " people to tend the fields!");
+            }
+            acres = getNumber("O Great Hammurabi, how many acres do you wish to plant? ");
+    }
+    return acres;
+}
 }
