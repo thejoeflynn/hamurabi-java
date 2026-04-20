@@ -1,3 +1,4 @@
+package hammurabi;
 
 import java.util.Random;
 import java.util.Scanner;
@@ -21,6 +22,7 @@ public class Hammurabi {
         int harvested = 0;
         int acresToPlant = 0;
         int rats = 0;   
+        int totalStarved = 0;
 
         for (int year = 1; year <= 10; year++) {
             printSummary(year, population, starved, newImmigrants, bushels, acres, landPrice, harvested, 0, rats);
@@ -49,6 +51,8 @@ public class Hammurabi {
         starved = starvationDeaths(population, grainToFeed);
         population -= starved;
 
+        totalStarved += starved;
+
         if (uprising(population, starved)) {
             System.out.println("O Great Hammurabi, you have starved too many people! You are overthrown!");
             return;
@@ -68,6 +72,7 @@ public class Hammurabi {
 
         landPrice = newCostOfLand();
         }
+        finalSummary(population, acres, totalStarved);
     }
 
     void printSummary(int year, int population, int starvation, int immigrants, int bushels, int acres, int landPrice, int harvest, int yield, int rats) {
@@ -175,4 +180,24 @@ public class Hammurabi {
     int newCostOfLand(){
         return random.nextInt(7) + 17;
     }
+
+    void finalSummary(int population, int acres, int totalStarved) {
+        int acresPerPerson = acres / population;
+        int percentStarved = totalStarved * 100 / population;
+
+        System.out.println("\nYour ten year rule has ended!");
+        System.out.println("Total people starved: " + totalStarved);
+        System.out.println("Acres per person: " + acresPerPerson);
+
+        if (percentStarved > 33 || acresPerPerson < 7) {
+            System.out.println("Due to your extreme mismanagement you have been impeached and thrown out of office!");
+            } else if (percentStarved > 10 || acresPerPerson < 9) {
+                System.out.println("Your heavy handed performance smacks of Nero! The people hate your guts!");
+            } else if (percentStarved > 3 || acresPerPerson < 10) {
+                System.out.println("Your performance could have been better, but wasn't too bad.");
+            } else {
+                System.out.println("A fantastic performance! Charlemagne himself could not have done better!");
+        }
+    }
+
 }
